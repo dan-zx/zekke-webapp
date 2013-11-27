@@ -39,10 +39,10 @@ import com.zekke.webapp.service.GeocoderService;
  * @since version 1.0
  */
 @Named("geocoderService")
-public class GeocoderServiceImpl implements GeocoderService, Serializable {
+public class DefaultGeocoderService implements GeocoderService, Serializable {
 
     private static final long serialVersionUID = -4847250660509635313L;
-    private static final Logger LOG = LoggerFactory.getLogger(GeocoderServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultGeocoderService.class);
 
     private PlaceDao placeDao;
 
