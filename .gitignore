@@ -1,6 +1,17 @@
+# Generated files
+target/
+build/
+.gradle/
 *.class
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# NetBeans project files
+.nb-gradle/
+.nb-gradle-properties
+nb-configuration.xml
+nbactions.xml
+src/main/webapp/META-INF/context.xml
