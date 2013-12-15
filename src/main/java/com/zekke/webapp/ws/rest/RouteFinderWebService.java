@@ -17,11 +17,14 @@ package com.zekke.webapp.ws.rest;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import org.hibernate.validator.constraints.Range;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,22 +36,20 @@ import com.zekke.webapp.ZekkeException;
 import com.zekke.webapp.data.GeoPoint;
 import com.zekke.webapp.data.Route;
 import com.zekke.webapp.service.RouteFinderService;
-import com.zekke.webapp.ws.RouteFinderWebService;
-import com.zekke.webapp.ws.WebServiceException;
 
 /**
- * Route finder RESTful web service implementation. It's currently accessed
+ * Route finder RESTful web service. It's currently accessed
  * through https://zekke.herokuapp.com/api/v1/route-finder
  *
  * @author Daniel Pedraza
  * @since version 1.0
  */
 @Named("routeFinderWebService")
-@Path(BaseRestWebService.VER_1_URL_PREFIX + "route-finder")
-public class RouteFinderRestWebService extends BaseRestWebService implements RouteFinderWebService {
+@Path(BaseWebService.VER_1_URL_PATH + "route-finder")
+public class RouteFinderWebService extends BaseWebService {
 
     private static final long serialVersionUID = -7598784812983620304L;
-    private static final Logger LOG = LoggerFactory.getLogger(RouteFinderRestWebService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RouteFinderWebService.class);
 
     private RouteFinderService routeFinderService;
 
@@ -64,14 +65,13 @@ public class RouteFinderRestWebService extends BaseRestWebService implements Rou
      * @return a Route in json format.
      */
     @GET
-    @Override
     @Path("/route.json")
     @Produces(MediaType.APPLICATION_JSON)
     public Route findRoute(
-            @QueryParam("root-latitude")    Double rootLatitude,
-            @QueryParam("root-longitude")   Double rootLongitude,
-            @QueryParam("target-latitude")  Double targetLatitude,
-            @QueryParam("target-longitude") Double targetLongitude) {
+            @NotNull(message = "route.root.latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("root-latitude") Double rootLatitude,
+            @NotNull(message = "route.root.longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("root-longitude") Double rootLongitude,
+            @NotNull(message = "route.target.latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("target-latitude") Double targetLatitude,
+            @NotNull(message = "route.target.longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("target-longitude") Double targetLongitude) {
         GeoPoint rootPosition = new GeoPoint();
         rootPosition.setLatitude(rootLatitude);
         rootPosition.setLongitude(rootLongitude);

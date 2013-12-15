@@ -19,12 +19,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,22 +40,20 @@ import com.zekke.webapp.ZekkeException;
 import com.zekke.webapp.data.GeoPoint;
 import com.zekke.webapp.data.Place;
 import com.zekke.webapp.service.GeocoderService;
-import com.zekke.webapp.ws.GeocoderWebService;
-import com.zekke.webapp.ws.WebServiceException;
 
 /**
- * Geocoder RESTful web service implementation. It's currently accessed through
+ * Geocoder RESTful web service. It's currently accessed through
  * https://zekke.herokuapp.com/api/v1/geocoder/
  *
  * @author Daniel Pedraza
  * @since version 1.0
  */
 @Named("geocoderWebService")
-@Path(BaseRestWebService.VER_1_URL_PREFIX + "geocoder")
-public class GeocoderRestWebService extends BaseRestWebService implements GeocoderWebService {
+@Path(BaseWebService.VER_1_URL_PATH + "geocoder")
+public class GeocoderWebService extends BaseWebService {
 
     private static final long serialVersionUID = -7489392067354820088L;
-    private static final Logger LOG = LoggerFactory.getLogger(GeocoderRestWebService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GeocoderWebService.class);
 
     private GeocoderService geocoderService;
 
@@ -64,12 +66,11 @@ public class GeocoderRestWebService extends BaseRestWebService implements Geocod
      * @return a Place in json format.
      */
     @GET
-    @Override
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/places/by-position/place.json")
     public Place findByPosition(
-            @QueryParam("latitude")  Double latitude,
-            @QueryParam("longitude") Double longitude) {
+            @NotNull(message = "latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("latitude") Double latitude,
+            @NotNull(message = "longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("longitude") Double longitude) {
         GeoPoint position = new GeoPoint();
         position.setLatitude(latitude);
         position.setLongitude(longitude);
@@ -102,10 +103,10 @@ public class GeocoderRestWebService extends BaseRestWebService implements Geocod
      * @return a list of places in json format.
      */
     @GET
-    @Override
     @Path("/places/like/{name}.json")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Place> findLikeName(@PathParam("name") String name) {
+    public List<Place> findLikeName(
+            @NotBlank(message = "place.name.required") @PathParam("name") String name) {
         try {
             return geocoderService.findLikeName(name);
         } catch (DataAccessException | TransactionException ex) {
@@ -137,14 +138,13 @@ public class GeocoderRestWebService extends BaseRestWebService implements Geocod
      * @return a list of places' names in json format.
      */
     @GET
-    @Override
     @Path("/names/in-area/like/{name}.json")
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> findNamesInAreaLikeName(
-            @PathParam("name")       String name,
-            @QueryParam("latitude")  Double latitude,
-            @QueryParam("longitude") Double longitude,
-            @QueryParam("radius")    Double radius) {
+            @NotBlank(message = "place.name.required") @PathParam("name") String name,
+            @NotNull(message = "latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("latitude") Double latitude,
+            @NotNull(message = "longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("longitude") Double longitude,
+            @NotNull(message = "radius.required") @QueryParam("radius") Double radius) {
         GeoPoint center = new GeoPoint();
         center.setLatitude(latitude);
         center.setLongitude(longitude);

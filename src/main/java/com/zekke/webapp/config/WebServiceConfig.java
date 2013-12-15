@@ -21,12 +21,6 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
-import com.zekke.webapp.ws.rest.GeocoderRestWebService;
-import com.zekke.webapp.ws.rest.RouteFinderRestWebService;
-import com.zekke.webapp.ws.rest.handler.ConstraintViolationExceptionHandler;
-import com.zekke.webapp.ws.rest.handler.GenericExceptionHandler;
-import com.zekke.webapp.ws.rest.handler.ZekkeExceptionHandler;
-
 /**
  * Jersey web service configuration class. Creates web services and providers.
  *
@@ -40,16 +34,11 @@ public class WebServiceConfig extends ResourceConfig {
      * Registers Jersey application components.
      */
     public WebServiceConfig() {
-        // Web services implementations
-        register(GeocoderRestWebService.class);
-        register(RouteFinderRestWebService.class);
+        // Web service packages
+        packages("com.zekke.webapp.ws.rest", 
+                 "com.zekke.webapp.ws.rest.provider");
 
-        // Exception handlers
-        register(ConstraintViolationExceptionHandler.class);
-        register(GenericExceptionHandler.class);
-        register(ZekkeExceptionHandler.class);
-
-        // Json mapping support
+        // JSON mapping support
         register(JacksonFeature.class);
 
         // Bean validation support

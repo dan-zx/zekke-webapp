@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.zekke.webapp.ws.rest.handler;
+package com.zekke.webapp.ws.rest.provider;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

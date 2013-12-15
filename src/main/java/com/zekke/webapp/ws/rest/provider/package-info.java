@@ -15,6 +15,6 @@
  */
 
 /**
- * RESTful exception handlers.
+ * RESTful feature providers.
  */
-package com.zekke.webapp.ws.rest.handler;
+package com.zekke.webapp.ws.rest.provider;

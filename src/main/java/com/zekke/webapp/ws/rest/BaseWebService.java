@@ -17,9 +17,6 @@ package com.zekke.webapp.ws.rest;
 
 import java.io.Serializable;
 
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,22 +27,10 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Pedraza
  * @since version 1.0
  */
-public abstract class BaseRestWebService implements Serializable {
+public abstract class BaseWebService implements Serializable {
 
-    protected static final String VER_1_URL_PREFIX = "v1/";
+    protected static final String VER_1_URL_PATH = "v1/";
 
     private static final long serialVersionUID = -5505817900908270945L;
-    private static final Logger LOG = LoggerFactory.getLogger(BaseRestWebService.class);
-
-    protected HttpHeaders headers;
-
-    /**
-     * Sets the request HTTP headers. It's currently used by Jersey.
-     *
-     * @param headers the request HTTP headers.
-     */
-    @Context
-    public void setHeaders(HttpHeaders headers) {
-        this.headers = headers;
-    }
+    private static final Logger LOG = LoggerFactory.getLogger(BaseWebService.class);
 }
