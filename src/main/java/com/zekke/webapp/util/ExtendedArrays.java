@@ -16,7 +16,7 @@
 package com.zekke.webapp.util;
 
 /**
- * Provides utility methods for arryas.
+ * Provides utility methods for arrays.
  *
  * @author Daniel Pedraza
  * @since version 1.0

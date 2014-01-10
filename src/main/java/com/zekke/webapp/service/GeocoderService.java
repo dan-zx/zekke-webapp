@@ -22,7 +22,7 @@ import com.zekke.webapp.data.Place;
 
 /**
  * Geocoder service interface. Provides a custom geocoder for private spaces
- * that translates from coordinates to places and viceversa.
+ * that translates from coordinates to places and vice versa.
  *
  * @author Daniel Pedraza
  * @since version 1.0

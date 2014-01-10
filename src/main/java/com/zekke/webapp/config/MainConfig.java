@@ -49,7 +49,7 @@ public class MainConfig {
      *
      * @param resourceLoader any ResourceLoader.
      * @return a PropertyPlaceholderConfigurer.
-     * @throws IOException if the proporties file is not found in
+     * @throws IOException if the properties file is not found in
      * {@link #CONFIG_PROPERTIES_URI}.
      */
     @Bean
@@ -64,7 +64,7 @@ public class MainConfig {
      *
      * @param resourceLoader any ResourceLoader.
      * @return a Properties.
-     * @throws IOException if the proporties file is not found in
+     * @throws IOException if the properties file is not found in
      * {@link #CONFIG_PROPERTIES_URI}.
      */
     @Bean

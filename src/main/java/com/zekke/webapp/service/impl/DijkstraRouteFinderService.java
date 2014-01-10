@@ -135,7 +135,7 @@ public class DijkstraRouteFinderService implements RouteFinderService, Serializa
     }
 
     /**
-     * Returs an unvisited place with the minimum distance.
+     * Returns an unvisited place with the minimum distance.
      *
      * @param d the distance map.
      * @param g the list of "nodes".

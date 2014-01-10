@@ -59,7 +59,7 @@ public class RouteFinderWebService extends BaseWebService {
      * https://zekke.herokuapp.com/api/v1/route-finder/route.json?root-latitude=some_value&root-longitude=some_value&target-latitude=some_value&target-longitude=some_value
      *
      * @param rootLatitude the root latitude coordinate.
-     * @param rootLongitude the root longitude cooordinate.
+     * @param rootLongitude the root longitude coordinate.
      * @param targetLatitude the target latitude coordinate.
      * @param targetLongitude the target longitude coordinate.
      * @return a Route in json format.

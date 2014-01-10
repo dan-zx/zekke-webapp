@@ -40,7 +40,7 @@ import javax.persistence.UniqueConstraint;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
- * Place represents a place of interest or a tansition place in a map.
+ * Place represents a place of interest or a transition place in a map.
  *
  * @author Daniel Pedraza
  * @since version 1.0
