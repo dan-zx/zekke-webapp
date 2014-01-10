@@ -16,6 +16,7 @@
 package com.zekke.webapp.config;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -23,6 +24,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ResourceLoader;
+
+import com.zekke.webapp.Messages;
 
 /**
  * Spring main configuration class. Creates all of the objects used in the whole
@@ -36,6 +39,10 @@ import org.springframework.core.io.ResourceLoader;
 public class MainConfig {
 
     private static final String CONFIG_PROPERTIES_URI = "/WEB-INF/config/app-config.properties";
+
+    static {
+        Locale.setDefault(Messages.DEFAULT_LOCALE);
+    }
 
     /**
      * Creates a new PropertyPlaceholderConfigurer.

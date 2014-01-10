@@ -39,6 +39,8 @@ import com.zekke.webapp.util.Strings;
 public final class Messages {
 
     public static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+    public static final String RESOURCE_BUNDLE_BASE_NAME = "com.zekke.webapp.messages";
+    public static final String MISSING_RESOURCE_KEY_FORMAT = "???%s???";
     public static final Collection<Locale> SUPPORTED_LOCALES = Collections.unmodifiableCollection(
             Arrays.asList(
                     DEFAULT_LOCALE,
@@ -46,8 +48,6 @@ public final class Messages {
     );
 
     private static final Logger LOG = LoggerFactory.getLogger(Messages.class);
-    private static final String RESOURCE_BUNDLE_BASE_NAME = "com.zekke.webapp.messages";
-    private static final String MISSING_RESOURCE_KEY_FORMAT = "???%s???";
 
     /**
      * Default constructor. Do NOT try to initialize this class, it is suppose
@@ -66,7 +66,7 @@ public final class Messages {
      */
     public static String get(String key) {
         try {
-            return ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, DEFAULT_LOCALE).getString(key);
+            return ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME).getString(key);
         } catch (MissingResourceException ex) {
             LOG.warn("Can't find message for key: [{}]", key, ex);
             return String.format(MISSING_RESOURCE_KEY_FORMAT, key);
@@ -91,7 +91,7 @@ public final class Messages {
 
         if (!ExtendedArrays.isNullOrEmpty(formatArgs)) {
             try {
-                MessageFormat formatter = new MessageFormat(Strings.EMPTY, DEFAULT_LOCALE);
+                MessageFormat formatter = new MessageFormat(Strings.EMPTY);
                 formatter.applyPattern(unformattedMessage);
                 return formatter.format(formatArgs);
             } catch (IllegalArgumentException ex) {
@@ -114,7 +114,7 @@ public final class Messages {
      */
     public static String get(String key, Locale locale) {
         try {
-            ResourceBundle bundle = SUPPORTED_LOCALES.contains(locale) ? ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, locale) : ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, DEFAULT_LOCALE);
+            ResourceBundle bundle = SUPPORTED_LOCALES.contains(locale) ? ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, locale) : ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME);
             return bundle.getString(key);
         } catch (MissingResourceException ex) {
             LOG.warn("Can't find message for key: [{}]", key, ex);
@@ -142,7 +142,7 @@ public final class Messages {
 
         if (!ExtendedArrays.isNullOrEmpty(formatArgs)) {
             try {
-                MessageFormat formatter = SUPPORTED_LOCALES.contains(locale) ? new MessageFormat(Strings.EMPTY, locale) : new MessageFormat(Strings.EMPTY, DEFAULT_LOCALE);
+                MessageFormat formatter = SUPPORTED_LOCALES.contains(locale) ? new MessageFormat(Strings.EMPTY, locale) : new MessageFormat(Strings.EMPTY);
                 formatter.applyPattern(unformattedMessage);
                 return formatter.format(formatArgs);
             } catch (IllegalArgumentException ex) {

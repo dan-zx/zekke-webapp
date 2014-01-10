@@ -68,10 +68,10 @@ public class RouteFinderWebService extends BaseWebService {
     @Path("/route.json")
     @Produces(MediaType.APPLICATION_JSON)
     public Route findRoute(
-            @NotNull(message = "route.root.latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("root-latitude") Double rootLatitude,
-            @NotNull(message = "route.root.longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("root-longitude") Double rootLongitude,
-            @NotNull(message = "route.target.latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("target-latitude") Double targetLatitude,
-            @NotNull(message = "route.target.longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("target-longitude") Double targetLongitude) {
+            @NotNull(message = "{route.root.latitude.required}") @Range(message = "{latitude.notValid}", min = -85, max = 85) @QueryParam("root-latitude") Double rootLatitude,
+            @NotNull(message = "{route.root.longitude.required}") @Range(message = "{longitude.notValid}", min = -180, max = 180) @QueryParam("root-longitude") Double rootLongitude,
+            @NotNull(message = "{route.target.latitude.required}") @Range(message = "{latitude.notValid}", min = -85, max = 85) @QueryParam("target-latitude") Double targetLatitude,
+            @NotNull(message = "{route.target.longitude.required}") @Range(message = "{longitude.notValid}", min = -180, max = 180) @QueryParam("target-longitude") Double targetLongitude) {
         GeoPoint rootPosition = new GeoPoint();
         rootPosition.setLatitude(rootLatitude);
         rootPosition.setLongitude(rootLongitude);

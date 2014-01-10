@@ -54,8 +54,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- ARTIFACT VERSIONS -->
-        <spring.version>3.2.5.RELEASE</spring.version>
-        <jersey.version>2.4.1</jersey.version>
+        <spring.version>3.2.6.RELEASE</spring.version>
+        <jersey.version>2.5.1</jersey.version>
         <slf4j.version>1.7.5</slf4j.version>
     </properties>
 
@@ -159,12 +159,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.2.7.SP1</version>
+            <version>4.2.8.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.0.1.Final</version>
+            <version>5.0.2.Final</version>
         </dependency>
         
         <!-- LOGGING -->

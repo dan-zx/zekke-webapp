@@ -15,12 +15,8 @@
  */
 package com.zekke.webapp.ws.rest.provider;
 
-import java.util.Locale;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -29,7 +25,6 @@ import javax.ws.rs.ext.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zekke.webapp.Messages;
 import com.zekke.webapp.util.RestUtils;
 
 /**
@@ -43,8 +38,6 @@ import com.zekke.webapp.util.RestUtils;
 public class ConstraintViolationExceptionHandler implements ExceptionMapper<ConstraintViolationException> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConstraintViolationExceptionHandler.class);
-
-    private HttpHeaders headers;
 
     /**
      * Map any ConstraintViolationException to a json response responding with
@@ -69,7 +62,6 @@ public class ConstraintViolationExceptionHandler implements ExceptionMapper<Cons
      * @return a json string.
      */
     private String toJson(ConstraintViolationException ex) {
-        Locale clientLocale = RestUtils.getClientLocale(headers, Messages.SUPPORTED_LOCALES, Messages.DEFAULT_LOCALE);
 
         StringBuilder messageBuilder = new StringBuilder();
         StringBuilder logMessageBuilder = new StringBuilder();
@@ -81,7 +73,7 @@ public class ConstraintViolationExceptionHandler implements ExceptionMapper<Cons
                     .append("-->[")
                     .append(constraintViolation.getInvalidValue())
                     .append("], ");
-            messageBuilder.append(Messages.get(constraintViolation.getMessageTemplate(), clientLocale))
+            messageBuilder.append(constraintViolation.getMessage())
                     .append(", ");
         }
 
@@ -90,15 +82,5 @@ public class ConstraintViolationExceptionHandler implements ExceptionMapper<Cons
 
         LOG.error("Validation errors: {}", logMessageBuilder);
         return RestUtils.toJson(ex, messageBuilder.toString());
-    }
-
-    /**
-     * Sets the request HTTP headers. It's currently used by Jersey.
-     *
-     * @param headers the request HTTP headers.
-     */
-    @Context
-    public void setHeaders(HttpHeaders headers) {
-        this.headers = headers;
     }
 }

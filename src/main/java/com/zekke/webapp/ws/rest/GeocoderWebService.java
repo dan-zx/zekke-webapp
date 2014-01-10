@@ -69,8 +69,8 @@ public class GeocoderWebService extends BaseWebService {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/places/by-position/place.json")
     public Place findByPosition(
-            @NotNull(message = "latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("latitude") Double latitude,
-            @NotNull(message = "longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("longitude") Double longitude) {
+            @NotNull(message = "{latitude.required}") @Range(message = "{latitude.notValid}", min = -85, max = 85) @QueryParam("latitude") Double latitude,
+            @NotNull(message = "{longitude.required}") @Range(message = "{longitude.notValid}", min = -180, max = 180) @QueryParam("longitude") Double longitude) {
         GeoPoint position = new GeoPoint();
         position.setLatitude(latitude);
         position.setLongitude(longitude);
@@ -106,7 +106,7 @@ public class GeocoderWebService extends BaseWebService {
     @Path("/places/like/{name}.json")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Place> findLikeName(
-            @NotBlank(message = "place.name.required") @PathParam("name") String name) {
+            @NotBlank(message = "{place.name.required}") @PathParam("name") String name) {
         try {
             return geocoderService.findLikeName(name);
         } catch (DataAccessException | TransactionException ex) {
@@ -141,10 +141,10 @@ public class GeocoderWebService extends BaseWebService {
     @Path("/names/in-area/like/{name}.json")
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> findNamesInAreaLikeName(
-            @NotBlank(message = "place.name.required") @PathParam("name") String name,
-            @NotNull(message = "latitude.required") @Range(message = "latitude.notValid", min = -85, max = 85) @QueryParam("latitude") Double latitude,
-            @NotNull(message = "longitude.required") @Range(message = "longitude.notValid", min = -180, max = 180) @QueryParam("longitude") Double longitude,
-            @NotNull(message = "radius.required") @QueryParam("radius") Double radius) {
+            @NotBlank(message = "{place.name.required}") @PathParam("name") String name,
+            @NotNull(message = "{latitude.required}") @Range(message = "{latitude.notValid}", min = -85, max = 85) @QueryParam("latitude") Double latitude,
+            @NotNull(message = "{longitude.required}") @Range(message = "{longitude.notValid}", min = -180, max = 180) @QueryParam("longitude") Double longitude,
+            @NotNull(message = "{radius.required}") @QueryParam("radius") Double radius) {
         GeoPoint center = new GeoPoint();
         center.setLatitude(latitude);
         center.setLongitude(longitude);

@@ -16,6 +16,7 @@
 package com.zekke.webapp.config;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -24,11 +25,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ResourceLoader;
 
+import com.zekke.webapp.Messages;
+
 @Configuration
 @Import({TestDataSourceConfig.class, BeanConfig.class})
 public class TestConfig {
 
     private static final String CONFIG_PROPERTIES_URI = "classpath:config/test-config.properties";
+
+    static {
+        Locale.setDefault(Messages.DEFAULT_LOCALE);
+    }
 
     @Bean
     public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(ResourceLoader resourceLoader) throws IOException {

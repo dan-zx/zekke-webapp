@@ -29,14 +29,13 @@ import org.slf4j.LoggerFactory;
 public class MessagesTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(MessagesTest.class);
-    private static final String MISSING_RESOURCE_KEY_FORMAT = "???%s???";
 
     @Test
     public void testGetMessage() throws Exception {
         LOG.trace("testGetMessage");
 
         String key = "mock.message";
-        String keyNotFoundStr = String.format(MISSING_RESOURCE_KEY_FORMAT, key);
+        String keyNotFoundStr = String.format(Messages.MISSING_RESOURCE_KEY_FORMAT, key);
         String actual = Messages.get(key);
 
         assertNotNull(actual);
@@ -51,7 +50,7 @@ public class MessagesTest {
 
         String key = "mock.message.with.args";
         Object[] formatArgs = {56.7, "arg0ToBind", false};
-        String keyNotFoundStr = String.format(MISSING_RESOURCE_KEY_FORMAT, key);
+        String keyNotFoundStr = String.format(Messages.MISSING_RESOURCE_KEY_FORMAT, key);
         String actual = Messages.get(key, formatArgs);
 
         assertNotNull(actual);
@@ -77,7 +76,7 @@ public class MessagesTest {
         }
 
         String key = "mock.message";
-        String keyNotFoundStr = String.format(MISSING_RESOURCE_KEY_FORMAT, key);
+        String keyNotFoundStr = String.format(Messages.MISSING_RESOURCE_KEY_FORMAT, key);
         String actual = Messages.get(key, locale);
 
         assertNotNull(actual);
@@ -100,7 +99,7 @@ public class MessagesTest {
 
         String key = "mock.message.with.args";
         Object[] formatArgs = {56, "arg0ToBind", false};
-        String keyNotFoundStr = String.format(MISSING_RESOURCE_KEY_FORMAT, key);
+        String keyNotFoundStr = String.format(Messages.MISSING_RESOURCE_KEY_FORMAT, key);
         String actual = Messages.get(key, locale, formatArgs);
 
         assertNotNull(actual);
