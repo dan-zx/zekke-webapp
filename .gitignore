@@ -15,3 +15,9 @@ build/
 nb-configuration.xml
 nbactions.xml
 src/main/webapp/META-INF/context.xml
+
+# Idea project files
+.idea/
+
+# macOS files
+.DS_Store

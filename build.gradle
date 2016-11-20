@@ -1,0 +1,71 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+group 'com.zekke'
+version '1.0-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_1_8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+[compileJava, compileTestJava]*.options*.compilerArgs = ['-Xlint']
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    assertjVersion            = '3.5.2'
+    groovyVersion             = '2.4.7'
+    hibernateValidatorVersion = '5.3.2.Final'
+    javaxInjectVersion        = '1'
+    jerseyVersion             = '2.24'
+    jspVersion                = '2.3.1'
+    logbackVersion            = '1.1.7'
+    mockitoVersion            = '2.2.21'
+    servletVersion            = '3.1.0'
+    slf4jVersion              = '1.7.21'
+    springVersion             = '4.3.4.RELEASE'
+    testNgVersion             = '6.9.13.6'
+}
+
+dependencies {
+    // WEB
+    providedCompile "javax.servlet:javax.servlet-api:${servletVersion}"
+    providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${jspVersion}"
+
+    // SPRING
+    compile ("org.springframework:spring-context:${springVersion}") {
+        exclude module: 'commons-logging'
+    }
+    compile "org.springframework:spring-web:${springVersion}"
+    compile "javax.inject:javax.inject:1"
+
+    // JERSEY
+    compile "org.glassfish.jersey.containers:jersey-container-servlet:${jerseyVersion}"
+    compile "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
+    compile "org.glassfish.jersey.ext:jersey-spring3:${jerseyVersion}"
+    compile ("org.glassfish.jersey.ext:jersey-bean-validation:${jerseyVersion}") {
+        exclude module: 'hibernate-validator'
+    }
+
+    // BEAN VALIDATION
+    compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
+
+    // LOGGING
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    compile "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
+    compile "ch.qos.logback:logback-classic:${logbackVersion}"
+    runtime "org.codehaus.groovy:groovy:${groovyVersion}"
+
+    // TEST
+    testCompile "org.testng:testng:${testNgVersion}"
+    testCompile "org.assertj:assertj-core:${assertjVersion}"
+    testCompile "org.mockito:mockito-core:${mockitoVersion}"
+    testCompile "org.springframework:spring-test:${springVersion}"
+}
+
+test {
+    useTestNG()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2'
+}
