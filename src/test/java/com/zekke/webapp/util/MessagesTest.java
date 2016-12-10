@@ -39,7 +39,7 @@ public class MessagesTest {
     }
 
     @DataProvider
-    public Object[][] messagesWithoutArgsData() {
+    public Object[][] messagesWithoutArgs() {
         return new Object[][]{
                 {"test.message", "Test message"},
                 {"non_existing.message", "???non_existing.message???"}
