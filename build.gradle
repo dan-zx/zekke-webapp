@@ -67,5 +67,5 @@ test {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.2'
+    gradleVersion = '2.14.1'
 }
