@@ -20,9 +20,13 @@ import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
+
+import static java.util.Collections.unmodifiableSet;
 
 /**
  * Utility class that contains methods which return strings from the message bundles located in
@@ -35,24 +39,45 @@ public class Messages {
     private static final String RESOURCE_BUNDLE_BASE_NAME = "com.zekke.webapp.messages";
     private static final String MISSING_RESOURCE_KEY_FORMAT = "???%s???";
     private static final Logger LOGGER = LoggerFactory.getLogger(Messages.class);
+    private static final Set<Locale> SUPPORTED_LOCALES;
+
+    static {
+        Set<Locale> locales = new HashSet<>();
+        locales.add(Locale.ROOT);
+        SUPPORTED_LOCALES = unmodifiableSet(locales);
+    }
 
     private Messages() {
         throw new AssertionError();
     }
 
     /**
-     * Gets a message for the given key from the default resource bundle formatted with the given
-     * format arguments.
+     * Gets a message for the given key from {@value #RESOURCE_BUNDLE_BASE_NAME} resource bundle
+     * formatted with the given format arguments.
      *
      * @param messageKey the key for the desired message.
      * @param messageArguments the objects to be formatted and substituted in the message.
-     * @return ???key??? if no message for the given key can be found; otherwise the message for the
-     * given key formatted with the given format arguments.
+     * @return {@value #MISSING_RESOURCE_KEY_FORMAT} if no message for the given key can be found;
+     * otherwise the message for the given key formatted with the given format arguments.
      */
-    public static String get(String messageKey, Object... messageArguments) {
+    public static String getMessage(String messageKey, Object... messageArguments) {
+        return getMessage(messageKey, Locale.ROOT, messageArguments);
+    }
+
+    /**
+     * Gets a message for the given key from {@value #RESOURCE_BUNDLE_BASE_NAME} resource bundle
+     * formatted with the given format arguments.
+     *
+     * @param messageKey the key for the desired message.
+     * @param locale the locale.
+     * @param messageArguments the objects to be formatted and substituted in the message.
+     * @return {@value #MISSING_RESOURCE_KEY_FORMAT} if no message for the given key can be found;
+     * otherwise the message for the given key formatted with the given format arguments.
+     */
+    public static String getMessage(String messageKey, Locale locale, Object... messageArguments) {
         String message;
         try {
-            message = ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, Locale.ROOT).getString(messageKey);
+            message = getMessagesBundle(locale).getString(messageKey);
         } catch (MissingResourceException ex) {
             LOGGER.warn("Can't find message for key: [{}]", messageKey, ex);
             return String.format(MISSING_RESOURCE_KEY_FORMAT, messageKey);
@@ -65,5 +90,9 @@ public class Messages {
             }
         }
         return message;
+    }
+
+    private static ResourceBundle getMessagesBundle(Locale locale) {
+        return SUPPORTED_LOCALES.contains(locale) ? ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, locale) : ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, Locale.ROOT);
     }
 }

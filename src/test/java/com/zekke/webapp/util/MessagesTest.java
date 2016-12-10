@@ -27,18 +27,18 @@ public class MessagesTest {
 
     @Test(dataProvider = "messagesWithoutArgs")
     public void shouldGetExpectedMessageWithNoExceptions(String messageKey, String expectedMessage) {
-        String actualMessage = Messages.get(messageKey);
+        String actualMessage = Messages.getMessage(messageKey);
         assertThat(actualMessage).isNotNull().isNotEmpty().isEqualTo(expectedMessage);
     }
 
     @Test
     public void shouldGetMessageUsingArguments() {
         List<String> args = Arrays.asList("a1arg");
-        String actualMessage = Messages.get("test.message_with_args", args.get(0));
+        String actualMessage = Messages.getMessage("test.message_with_args", args.get(0));
         assertThat(actualMessage).isNotNull().isNotEmpty().doesNotMatch("\\?\\?\\?.+\\?\\?\\?").contains(args);
     }
 
-    @DataProvider(name = "messagesWithoutArgs")
+    @DataProvider
     public Object[][] messagesWithoutArgsData() {
         return new Object[][]{
                 {"test.message", "Test message"},
