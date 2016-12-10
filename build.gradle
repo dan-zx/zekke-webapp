@@ -1,11 +1,16 @@
-apply plugin: 'java'
-apply plugin: 'war'
+plugins {
+    id 'java'
+    id 'war'
+    id 'net.saliman.cobertura' version '2.3.2'
+    id 'com.github.kt3k.coveralls' version '2.7.1'
+}
 
 group 'com.zekke'
 version '1.0-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_1_8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 [compileJava, compileTestJava]*.options*.compilerArgs = ['-Xlint']
+cobertura.coverageFormats = ['html', 'xml']
 
 repositories {
     mavenCentral()
